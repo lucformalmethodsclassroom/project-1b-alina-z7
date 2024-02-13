@@ -16,11 +16,16 @@ public class FixedArrayQueue<E> implements SimpleQueue<E> {
   private final E[] data;
 
   // TODO why do we need an explicit constructor?
+  // Answer: An explicit constructor allows for creating instances of the object 
+  // with custom input and settings. Otherwise, Java already provides a default constructor
+  // that creates an instance of the object without any parameter input.
 
   @SuppressWarnings("unchecked")
   public FixedArrayQueue(final int capacity) {
     // TODO check argument validity
-
+    if (capacity <= 0) {
+      throw new IllegalArgumentException("Provide a correct capacity number.");
+    }
     this.capacity = capacity;
     this.data = (E[]) new Object[capacity];
     this.size = 0;
@@ -31,34 +36,40 @@ public class FixedArrayQueue<E> implements SimpleQueue<E> {
   @Override
   public boolean offer(final E obj) {
     // TODO
-
-    return false;
+    if (capacity > size++) {
+      return false;
+    }
+    data[rear++] = obj; 
+    size++;
+    return true;
   }
 
   @Override
   public E peek() {
     // TODO
-
-    return null;
+    return data[front];
   }
 
   @Override
   public E poll() {
     // TODO
-
-    return null;
+    E temp = data[front];
+    data[front] = null;
+    front++;
+    rear--;
+    return temp;
   }
 
   @Override
   public boolean isEmpty() {
     // TODO
-    return true;
+    return data.length == 0;
   }
 
   @Override
   public boolean isFull() {
     // TODO
-    return false;
+    return data.length >= capacity;
   }
 
   @Override
@@ -74,8 +85,10 @@ public class FixedArrayQueue<E> implements SimpleQueue<E> {
   @Override
   public List<E> asList() {
     // TODO implement using an ArrayList preallocated with the right size
-    final ArrayList<E> result = null;
-    
+    final ArrayList<E> result = new ArrayList<>(capacity);
+    for (int i = 0; i < data.length; i++) {
+      result.add(data[i]);
+    }
     return result;
   }
 }
