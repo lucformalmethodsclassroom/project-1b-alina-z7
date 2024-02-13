@@ -86,8 +86,8 @@ public class FixedArrayQueue<E> implements SimpleQueue<E> {
   public List<E> asList() {
     // TODO implement using an ArrayList preallocated with the right size
     final ArrayList<E> result = new ArrayList<>(capacity);
-    for (int i = 0; i < data.length; i++) {
-      result.add(data[i]);
+    for (int idx = front; idx <= rear; idx++) {
+      result.add(data[idx]);
     }
     return result;
   }
