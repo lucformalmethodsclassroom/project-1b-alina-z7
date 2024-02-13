@@ -15,6 +15,7 @@ class TestSimpleQueueJqwik {
     @Override
     public boolean precondition(final SimpleQueue<String> queue) {
       // TODO implement precondition for offer method
+      
       return true;
     }
     @Override
