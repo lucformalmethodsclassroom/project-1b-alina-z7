@@ -15,8 +15,7 @@ class TestSimpleQueueJqwik {
     @Override
     public boolean precondition(final SimpleQueue<String> queue) {
       // TODO implement precondition for offer method
-      
-      return true;
+      return queue.isFull();
     }
     @Override
     public Arbitrary<Transformer<SimpleQueue<String>>> transformer() {
@@ -25,7 +24,9 @@ class TestSimpleQueueJqwik {
         String.format("offer(%s)", element),
         queue -> {
           // TODO capture state before offer, perform, and check postcondition
-
+          if (queue.isFull()) {
+            throw new IllegalArgumentException();
+          }
         }
       ));
     }
@@ -36,7 +37,7 @@ class TestSimpleQueueJqwik {
       .describeAs("poll")
       .justMutate(queue -> {
         // TODO capture state before poll, perform, and check postcondition
-
+        
       });
   }
 
