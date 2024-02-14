@@ -15,7 +15,7 @@ class TestSimpleQueueJqwik {
     @Override
     public boolean precondition(final SimpleQueue<String> queue) {
       // TODO implement precondition for offer method
-      return queue.isFull();
+      return !queue.isFull();
     }
     @Override
     public Arbitrary<Transformer<SimpleQueue<String>>> transformer() {
@@ -24,9 +24,10 @@ class TestSimpleQueueJqwik {
         String.format("offer(%s)", element),
         queue -> {
           // TODO capture state before offer, perform, and check postcondition
-          if (queue.isFull()) {
-            throw new IllegalArgumentException();
-          }
+          final int prevSize = queue.size();
+          queue.offer(element);
+          assertEquals(prevSize + 1, queue.size());
+          assertFalse(queue.isEmpty());
         }
       ));
     }
@@ -37,7 +38,13 @@ class TestSimpleQueueJqwik {
       .describeAs("poll")
       .justMutate(queue -> {
         // TODO capture state before poll, perform, and check postcondition
-        
+        final int prevSize = queue.size();
+        queue.poll();
+        if (prevSize > 0) {
+          assertEquals(prevSize - 1, queue.size());
+        } else {
+          assertFalse(queue.isFull());
+        }
       });
   }
 
@@ -46,7 +53,6 @@ class TestSimpleQueueJqwik {
   void checkSimpleQueue(@ForAll("simpleQueueActions") final ActionChain<SimpleQueue<String>> chain) {
     // TODO insert observable data invariant(s) for 0 <= size <= capacity
     chain
-    
     .run();
   }
 
