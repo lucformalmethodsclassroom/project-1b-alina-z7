@@ -18,14 +18,14 @@
 
     |   Methods  |  T(n) |  S(n)  |
     |------------|-------|--------|
-    | offer()    |  O(n) |  O(1)  |
+    | offer()    |  O(1) |  O(1)  |
     | peek()     |  O(1) |  O(1)  |
-    | poll()     |  O(n) |  O(1)  |
+    | poll()     |  O(1) |  O(1)  |
     | isEmpty()  |  O(1) |  O(1)  |
     | isFull()   |  O(1) |  O(1)  |
     | size()     |  O(1) |  O(1)  |
     | capacity() |  O(1) |  O(1)  |
-    | asList()   |  O(1) |  O(n)  |
+    | asList()   |  O(n) |  O(n)  |
     
 5. How exhaustively does the `TestSimpleQueue` test suite test the implementation, both conceptually and in terms of actual coverage?
 
