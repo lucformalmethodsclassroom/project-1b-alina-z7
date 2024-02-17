@@ -22,8 +22,7 @@ In this project, you will have the opportunity to implement a generic queue as a
 Specifically:
 
 1. Complete the TODO items in the `FixedArrayQueue` implementation until the tests in `TestSimpleQueue` pass.
-1. Complete the main class `SingleQueueService`, which reads successive input lines until EOF and
-puts them on a queue that the background consumer activity processes.
+1. Complete the main class `SingleQueueService`, which reads successive input lines until EOF and puts them on a queue that the background consumer activity processes.
 1. When running the main class, note that the consumer is set to serve customers at a fixed rate.
 By entering customers' names at different rates, try to create scenarios where customers arrive infrequently enough for the queue to remain empty, or in such quick succession that the queue becomes full (by pasting several of them at once).
 1. Complete the TODO items in the `TestSimpleQueueJqwik` test suite until it reflects the stated pre- and postconditions of the `SimpleQueue` methods.

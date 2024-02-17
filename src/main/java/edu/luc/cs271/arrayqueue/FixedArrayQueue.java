@@ -16,11 +16,16 @@ public class FixedArrayQueue<E> implements SimpleQueue<E> {
   private final E[] data;
 
   // TODO why do we need an explicit constructor?
+  // Answer: An explicit constructor allows for creating instances of the object 
+  // with custom input and settings. Otherwise, Java already provides a default constructor
+  // that creates an instance of the object without any parameter input.
 
   @SuppressWarnings("unchecked")
   public FixedArrayQueue(final int capacity) {
     // TODO check argument validity
-
+    if (capacity <= 0) {
+      throw new IllegalArgumentException("Provide a correct capacity number.");
+    }
     this.capacity = capacity;
     this.data = (E[]) new Object[capacity];
     this.size = 0;
@@ -31,34 +36,43 @@ public class FixedArrayQueue<E> implements SimpleQueue<E> {
   @Override
   public boolean offer(final E obj) {
     // TODO
-
-    return false;
+    if (size == capacity) {
+      return false;
+    }
+    rear = (rear + 1) % capacity;
+    data[rear] = obj;
+    size++;
+    return true;
   }
 
   @Override
   public E peek() {
     // TODO
-
-    return null;
+    return data[front];
   }
 
   @Override
   public E poll() {
     // TODO
-
-    return null;
+    if (isEmpty()) {
+      return null;
+    }
+    E temp = data[front];
+    front = (front + 1) % capacity;
+    size--;
+    return temp;
   }
 
   @Override
   public boolean isEmpty() {
     // TODO
-    return true;
+    return size == 0;
   }
 
   @Override
   public boolean isFull() {
     // TODO
-    return false;
+    return size == capacity;
   }
 
   @Override
@@ -74,8 +88,15 @@ public class FixedArrayQueue<E> implements SimpleQueue<E> {
   @Override
   public List<E> asList() {
     // TODO implement using an ArrayList preallocated with the right size
-    final ArrayList<E> result = null;
-    
-    return result;
+    final ArrayList<E> result = new ArrayList<>(size);
+    int curr = front;
+    for (int i = 0; i < size; i++) {
+        result.add(data[curr]);
+        curr = (curr + 1) % capacity;
+        if (curr == front) {
+            break;
+        }
+    }
+    return result; 
   }
 }
